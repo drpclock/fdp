@@ -1,0 +1,31 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Reglas para la colección usuarios
+    match /usuarios/{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+    
+    // Reglas para la colección empresas
+    match /empresas/{empresaId} {
+      allow read: if true;
+      allow write: if true;
+      
+      // Reglas para la subcolección trabajadores
+      match /trabajadores/{trabajadorId} {
+        allow read: if true;
+        allow write: if true;
+
+        // Reglas para la subcolección fichajes
+        match /fichajes/{fichajeId} {
+          allow read: if true;
+          allow create: if true;
+          allow update: if false;
+          allow delete: if false;
+        }
+      }
+    }
+  }
+} 
